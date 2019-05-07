@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmName(name = "Angles")
+
 package it.czerwinski.android.graphics
 
 /**

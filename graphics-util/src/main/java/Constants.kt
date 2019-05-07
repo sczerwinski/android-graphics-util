@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmName(name = "Constants")
+
 package it.czerwinski.android.graphics
 
 /** A `Float` value equal to pi constant. */
