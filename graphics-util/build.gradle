@@ -52,12 +52,15 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.0.1'
 
     implementation 'androidx.annotation:annotation:1.0.2'
+
+    testImplementation "junit:junit:$junitVersion"
 }
 
 dokka {
     moduleName = libDescription
     outputFormat = 'javadoc'
     outputDirectory = "$buildDir/javadoc"
+    includes = ['packages.md']
 }
 
 task sourcesJar(type: Jar) {
@@ -86,7 +89,7 @@ uploadArchives {
         beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
         pom.groupId = "$groupId"
-        pom.artifactId = "$artifactIdPrefix-${project.name}"
+        pom.artifactId = "$artifactId"
         pom.version = "$libVersion"
 
         pom.project {
