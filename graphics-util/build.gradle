@@ -45,15 +45,13 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     implementation 'androidx.core:core-ktx:1.0.1'
-
     implementation 'androidx.annotation:annotation:1.0.2'
 
     testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
 }
 
 dokka {
