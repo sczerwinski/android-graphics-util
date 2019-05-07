@@ -86,7 +86,7 @@ uploadArchives {
         beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
         pom.groupId = "$groupId"
-        pom.artifactId = "$artifactIdPrefix-${project.name}"
+        pom.artifactId = "$artifactId"
         pom.version = "$libVersion"
 
         pom.project {
