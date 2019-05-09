@@ -40,4 +40,24 @@ class AnglesTest {
 
         assertEquals(PI, result, DELTA)
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun arcLengthShouldBeConvertedToAngle() {
+        val arcLength = PI
+
+        val result = arcLength.arcLengthToAngle(radius = 2f)
+
+        assertEquals(RIGHT_ANGLE, result, DELTA)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun angleShouldBeConvertedToArcLength() {
+        val angle = STRAIGHT_ANGLE
+
+        val result = angle.angleToArcLength(radius = 2f)
+
+        assertEquals(DOUBLE_PI, result, DELTA)
+    }
 }
