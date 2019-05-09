@@ -21,9 +21,9 @@ import android.graphics.RectF
 /**
  * Copies the coordinates from the circle defined by its center and [radius].
  *
- * @param cx The x-coordinate of the center of the oval.
- * @param cy The x-coordinate of the center of the oval.
- * @param radius The radius of the oval.
+ * @param cx The x-coordinate of the center of the circle.
+ * @param cy The x-coordinate of the center of the circle.
+ * @param radius The radius of the circle.
  */
 fun RectF.setCircle(cx: Float, cy: Float, radius: Float) {
     this.left = cx - radius
