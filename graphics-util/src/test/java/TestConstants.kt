@@ -17,3 +17,5 @@
 package it.czerwinski.android.graphics
 
 const val DELTA = 0.000001f
+
+const val BIG_DELTA = 0.01f
