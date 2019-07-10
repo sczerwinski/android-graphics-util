@@ -14,8 +14,17 @@
  * limitations under the License.
  */
 
-package it.czerwinski.android.graphics
+package it.czerwinski.android.graphics.matchers
 
-const val DELTA = 0.000001f
+import android.graphics.RectF
+import org.mockito.ArgumentMatcher
+import org.mockito.internal.progress.ThreadSafeMockingProgress.mockingProgress
 
-const val BIG_DELTA = 0.01f
+private fun reportMatcher(matcher: ArgumentMatcher<*>) {
+    mockingProgress().argumentMatcherStorage.reportMatcher(matcher)
+}
+
+fun rectFEq(left: Float, top: Float, right: Float, bottom: Float, delta: Float): RectF {
+    reportMatcher(RectFMatcher(left, top, right, bottom, delta))
+    return RectF()
+}

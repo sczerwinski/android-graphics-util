@@ -16,6 +16,17 @@
 
 package it.czerwinski.android.graphics
 
-const val DELTA = 0.000001f
+import android.graphics.Path
 
-const val BIG_DELTA = 0.01f
+/**
+ * Clear any lines and curves from this path, making it empty,
+ * and applies a new path defined in [init] function.
+ *
+ * @param close Set to `true` if the path should be closed upon completion.
+ * @param init Function initializing a new path.
+ */
+inline fun Path.set(close: Boolean = false, init: Path.() -> Unit) {
+    reset()
+    init()
+    if (close) close()
+}

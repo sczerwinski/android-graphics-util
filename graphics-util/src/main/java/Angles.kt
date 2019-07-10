@@ -31,3 +31,19 @@ fun Float.radToDeg(): Float = this * FULL_ANGLE / DOUBLE_PI
  * @return Angle measured in radians.
  */
 fun Float.degToRad(): Float = this * DOUBLE_PI / FULL_ANGLE
+
+/**
+ * Calculates angle measured in degrees for the length of the arc and the specified [radius].
+ *
+ * @param radius The radius of the arc.
+ * @return The calculated angle measured in degrees.
+ */
+fun Float.arcLengthToAngle(radius: Float): Float = (this / radius).radToDeg()
+
+/**
+ * Calculates length of the arc with the angle measured in degrees and the specified [radius].
+ *
+ * @param radius The radius of the arc.
+ * @return The calculated length of the arc.
+ */
+fun Float.angleToArcLength(radius: Float): Float = degToRad() * radius
