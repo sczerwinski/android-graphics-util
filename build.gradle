@@ -1,0 +1,33 @@
+group groupId
+version libVersion
+description = libDescription
+
+buildscript {
+
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
+    }
+
+}
+
+allprojects {
+
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+    }
+
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

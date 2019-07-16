@@ -1,0 +1,74 @@
+language: android
+sudo: required
+jdk: oraclejdk8
+
+env:
+  global:
+    - secure: "U81ZZjSa3bpW2cx46xKIM0IkwM5i50gUB+B51LnwKvOSMa85XfEiVxVua+bRyMs1nZbTW8xFaDyZbRGmLvt8HeTOx9DH+/uuhU1WtK0JrIWRMlFo8WisglDtED6WRNadkz3PW8HozltSTZT9ra4kzkG9Kbj7iKwaQHLmNX01XSMxn8xEmMjhLnbEOsZpfSIeITtYXf1ybYK0HZsVNQeQTrwYHu1dZsYSi22Std4c4a01harS9RhZPSHY02k40aDevPLlb9GU6/fjRq7Iep0R/9j8ZVz4E6FU2zAGKocV9squlndh3Iafjj75kLviLXqeWB5j+IVLnJTvbfk4Zdo722tMv8MW7cirQzDKm22LIu1Q4jDUU3jJt/EdYLxPbQHpTQ7p11fGvaALAEYHrD0dLXlzrAvn9pf9MONg5lkLkELBUTV9zUtA1uQ2NHnnZJ7bLCvJQgeOdea+OJEwIMatOa/1LnoYkBTb4mTDe2ryUfKEVVJcKHKNeoB9mrGA6hQQaiB79DU+/DXIsrYBhw/Tx1UARB0+60ZX5pknCsbN1ziwxjMP9VFSEgqzhWbqIYhxDdE5t+fD9ZMI5MQAkIh/KKE8qfXq8CnsEw1Tzd8z9X1joJTnJQ3IC2+TSmwzsmG8C0tA/uS7+R90sznkHpfdlvgVP7AADJV4ZjW8pYsBp7w="
+    - secure: "ByGgiw5KxTVAHTL0x7MxrYR14eleCC+TRPYo8Ain0+/l4skgccowger/MigvMlTA6Wpo2oCa4fTvZNwrA5uKkRiiwSt1V0Si3EQzIDqqx6R2LvVJC4wqjnlO5nuPqOxxdCvGpi4IbGx8NzVeLn/X9ELDYp0NnwunJ/Aw7YUYQ3bws9DU5D9ek1+yEpvlBM5ne9NEMucCchb2ps1QzrCaglTKhay4aTOncgrouphDKBqHp/E1pCYh0NeUjWwm/ativvy0yGoYvOhlr3xzd32KaW5tYpDH8AXcmyhMzvxxc6eV0i4wl0yYzBmivFLl9N99FsjO/bQSYxPlFPdhODemtZaOsq0XC094KeJmmmZ9BIPQnzVHIIH2zVhFkresEF5W+ydkTz+H4F3SpmoYGwkH+JdSdF+qtAXrcrDqGZvrXxNIMtl4g1py1ZFPFYl0YWGPXeGTNtSerToQ3d8crYNXwcQSeOeHQDKOqDWyqrCw3BMQ1aDk3pqo5nIWvE8vRSda8rSNWn9QdYhWnDUVv36KiQCvTnC16qH4xM6hQW6/GQKI1j+FBgSBNr1Fbnl7lYx0qTtYJKeH2u6+YHgXzyGEZ0s4SG4yJmVhOHZ8cdnZbXlDL5cCX0RHcdHMoh6aen+wnAv379N0SGJVdiWekn+j1J+jMOmBnm2GVMB8gdj/le8="
+    - secure: "uo4v0D1QEThRD+7FgGMt/tHEGN50XAdExpHfTE5eE8LLNlxxfzFGTrANzTNcJYcvNPf1M20xQ8SI4erdfbS8A3YP+5VItdJDivo5Cttkyk3k9A6DerE6SqhkxNmXWBv8hyiVbALko9aRzYyJBU+zJd/QNXheXwkhuxyReSDeyhRkQeBEDX9bhsi4+8BJTp6yfaqQFf51Jrr3bbBylufQx+Io4kRYFawA0zviyPBB2tXZt4WNqz67fZM5tEA7G3z1Iea6SNQOUVr8VLp+PhCgLz58YSd/+NwjE+GMCBTC2ZlfDz4FRu8XIbhimpi5jZj2sz27Uq7er8ux9RIPpj9oNjUHt2Oan88tuc9PbW1KSzeXbY3+S/Nh1YAjn7bU96XMhSYFOktWZvPr03Qd0tLpuPj8jEeG7PpJzvWE6kUiTKbWm9xxlf2vphCsuFqtT2qg5ptrF5yeUIbjujoHnv1vrg0lNn4LgEuMMTCGky2zwGAX4R6dua0fuqMpwN402e3fyXxQdWLMrMiuJ9WU+J0rl4uokMYLKMEpLFDARxNn1GQMU+I3j3/hYC3MI5n+rr35itKxbeN7ph8MYpPHhkikCxG18ZjvnL8ukgnQ4mdZJ02Pu+DwVXrBxkEvYJJSFSrn1I+2M3sCQmC/7G7i3l4L5hm7/TO+PUnrMnYAwXhCBtw="
+    - secure: "Dc4VKkQ/BXDhgJ8wnfB698Bhluia5m3QRuTVvGEjvsRCuVVSY9j4tVo4jsQKa0GSVFKT9ymnr29Vtgdf2WBdTIPo1uFfn2yDxIuuavKBt7K6oSvWyCHhrNUGNKEO8P2xg5AuoGKJNtJiGGdGizDh8B7KcDNMplmK7840Nu12xmzQna1m4KLMlEnOe1o1azfhf1HMIvQUotvkoVIKisEMIvE8iwdxy4BhJL4YJFu3DHtWaYFVieB60Ta9hhQR6En25PbGjlY5W76IiQ6F3UP/gKaF17PqH/+mrj/O6bm9oiu3/jxF2H7PcFss6n67aMw52ZnpCg/4/iqsVIbHzVg2BUR8zHx6JgWEhuM7lG5QWQAn70coF8dF1eZpXdHL3vJpgbQ2JvB6/zpOyag54mNJbwsn6z7kJfY2zuR7CBHiGusxhotIm72D0Zmlj0lci3K2ggUQDGO56ZjhxDj4tq9Le0v0zdB25H3cJ3lznlIpLm/MPmpGelab/vDDjCqKGM1/6yHPORhq0HELkHxUreorR+ZO+NW0lpjQ54L98pShk9mwfesngvRTpXW97DntCYcX0ooBYk2zJc26yhQ+gd/BJhjWPmPBlFfbzltEbw8w97PJ4NZi6oz8w/tT8J2pbcFW0WHP0dYP0/X/4iB+CpLsU6guAVdBeAJk7WKVXVJSwr0="
+    - secure: "yl0YehBrWACGjh7KezRX7SVChuAv34P2yiwKljKqI0szdo1zogK8yYeLtuQXyfeMouLy3oUTvyFR8UGUbldEQmJ+Yn/cuN/M3HzDlrKUzB9GTPrPXUXBaxb8AleWnPdFejiy/eP/c+YTvU/NTevZ6Z3tnYbdvREGO/J42DxPIL588+l6o/7OdyWGionVAOzRl3ca6oeuGyspyJjL1vMD2XibcpP8AAefGndwBG74yldhVnUbndEhbYmfLR/xoZf57vlYU7NAcOMDIZ1x2ztgLGudIAsUnPoGk6xfyEeaB0GXBNOtKyA98PePd9yldblLRS9Nvy1sVSNqIAIhF/iY+qBTU7EueAsbPDlpyGmmRjbgfh2tRGrj32Ydx+ynwJVgRKTIbJz0G8o516Jt5xKC17LTzOZhhdHZ5aKBXbGJm0XUH/mmY9lxYAQSgo/yvzf84T3mJenUqNYAWt5wskhnpE2BONuxr9+vlK08tp+Ll7bf5ndZ9+8Y678Yz3mJs5DqJti0EMhrrpxALwkysw4nOxOxSqglC7J5Ab7XYGSW0jIQ/thD2aeLitUFbNpKNrh3i/u8GPGmzf7CdOaeVFXCe74rqDoh84mZ4ja8YFK55+JBfDdNSwXe5plr9xKXgEvpOH6H6idWEsULIM36KFSJqQ7O8T3ANP5Q7EKE3hM0Kj8="
+    - ANDROID_API_LEVEL=28
+    - ANDROID_BUILD_TOOLS_VERSION=28.0.3
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - tools
+    - extra-google-m2repository
+    - extra-android-m2repository
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
+before_install:
+  - touch $HOME/.android/repositories.cfg
+  - yes | sdkmanager "platforms;android-28"
+  - yes | sdkmanager "build-tools;28.0.3"
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+
+before_deploy: openssl aes-256-cbc
+  -K $encrypted_fc57b78bc8a1_key
+  -iv $encrypted_fc57b78bc8a1_iv
+  -in secring.gpg.enc
+  -out secring.gpg -d
+
+deploy:
+- provider: script
+  script: ./gradlew uploadArchives
+    -PossrhUsername='$SONATYPE_USERNAME'
+    -PossrhPassword='$SONATYPE_PASSWORD'
+    -Psigning.keyId='$SIG_KEY'
+    -Psigning.password='$SIG_PASS'
+    -Psigning.secretKeyRingFile='../$SIG_FILE'
+  skip_cleanup: true
+  on:
+    branch: develop
+- provider: script
+  script: ./gradlew uploadArchives
+    -PossrhUsername='$SONATYPE_USERNAME'
+    -PossrhPassword='$SONATYPE_PASSWORD'
+    -Psigning.keyId='$SIG_KEY'
+    -Psigning.password='$SIG_PASS'
+    -Psigning.secretKeyRingFile='../$SIG_FILE'
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
+
+notifications:
+  slack:
+    secure: "OweVm1vzhpWbxTnEkmZGZcP5P6gGSnCpSXcBkw4Xe+yXuJ0rsHpTLFiafnVy73LJWdJpgW3UA3G+h1pPdLvcPf1YD2XcVq3U8ArkucBvs3r7UDyBD4XOYl4Qm4Iq+xvvKxCprewmU6WReuE5e1rVmTGNaUpd98DrkCN8s2QDa3D6xLZwfA7Aes/A4Y5/olndUP4W2Mcy73+lXFfAsDiMdYFVDSnE7DYBL+AMfr1BpXVlEghkf3YmHSnpT8vZqxVIBNL858MCNaSckpn/Xd52b3IAUeNd8y3yPM+9SFxs6R+APD7nB3t8INRLe5GC2Sn2GqefIBxJh1WKhjb1eiQV3FVPj4eJ7Zxy9rdgAhL+5wjP9dksjQi2/xEMPZEyk1q2yzKcwiOXGcWAAheHhTzFY7oDSEPNY9wsHHLsSxSsPc9hwpSoO3ZTT+/CirsDlFGMqYz+p+90/5fHw+50q0ezoVvx0wtKf2BO5Zp85c8xC0HxetPlwGOzvdgRS86zOpxyiZEqP7D1W67iJrfcY/KUnblW/zFZBPN0I+XMZf0X/if1q7ipe7sVluouGwAa8EwpEZEOLvCgPguZaD9DKFc8fAPM716HgY+EwvcKZnzssQfcqRucLgwk9oJ/6K/0GyqOMBouwgWFKAPHhUm6eQzmvJck8mrcSRaHFQ1gkDMoHbM="
+
