@@ -25,7 +25,7 @@ import android.graphics.Path
  * @param close Set to `true` if the path should be closed upon completion.
  * @param init Function initializing a new path.
  */
-inline fun Path.set(close: Boolean = false, init: Path.() -> Unit) {
+inline fun <T : Path> T.set(close: Boolean = false, init: T.() -> Unit) {
     reset()
     init()
     if (close) close()
