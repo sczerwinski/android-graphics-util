@@ -208,4 +208,82 @@ class AdvancedPathTest {
             verify(path).close()
         }
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun shouldSetNewPath() {
+        doNothing().`when`(path).reset()
+        doNothing().`when`(path).arcTo(
+            cx = anyFloat(),
+            cy = anyFloat(),
+            radius = anyFloat(),
+            startAngle = anyFloat(),
+            sweepAngle = anyFloat(),
+            forceMoveTo = anyBoolean()
+        )
+
+        path.set {
+            arcTo(
+                cx = 1f,
+                cy = 2f,
+                radius = 0.5f,
+                startAngle = 10f,
+                sweepAngle = 20f,
+                forceMoveTo = true
+            )
+        }
+
+        inOrder(path).apply {
+            verify(path).reset()
+            verify(path).arcTo(
+                eq(1f, DELTA),
+                eq(2f, DELTA),
+                eq(0.5f, DELTA),
+                eq(10f, DELTA),
+                eq(20f, DELTA),
+                eq(true)
+            )
+            verifyNoMoreInteractions(path)
+        }
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun shouldSetNewClosedPath() {
+        doNothing().`when`(path).reset()
+        doNothing().`when`(path).arcTo(
+            cx = anyFloat(),
+            cy = anyFloat(),
+            radius = anyFloat(),
+            startAngle = anyFloat(),
+            sweepAngle = anyFloat(),
+            forceMoveTo = anyBoolean()
+        )
+        doNothing().`when`(path).close()
+
+        path.set(close = true) {
+            arcTo(
+                cx = 1f,
+                cy = 2f,
+                radius = 0.5f,
+                startAngle = 10f,
+                sweepAngle = 20f,
+                forceMoveTo = true
+            )
+        }
+
+        inOrder(path).apply {
+            verify(path).reset()
+            verify(path).arcTo(
+                eq(1f, DELTA),
+                eq(2f, DELTA),
+                eq(0.5f, DELTA),
+                eq(10f, DELTA),
+                eq(20f, DELTA),
+                eq(true)
+            )
+            verify(path).close()
+            verifyNoMoreInteractions(path)
+        }
+    }
 }
