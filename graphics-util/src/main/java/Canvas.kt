@@ -27,6 +27,16 @@ import kotlin.math.sin
  * Wraps the specified [block] in a call to `Canvas.withTranslation()`
  * with the specified radial coordinates.
  *
+ * **Example:**
+ * ```kotlin
+ * canvas.withRadialTranslation(
+ *     distance = 10.0f,
+ *     angle = 30.0f
+ * ) {
+ *     drawRect(rect, paint)
+ * }
+ * ```
+ *
  * @receiver The canvas.
  * @param distance Translation distance.
  * @param angle Translation angle in degrees.
