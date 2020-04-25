@@ -18,12 +18,16 @@
 
 package it.czerwinski.android.graphics
 
+import android.graphics.Color
 import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
 import androidx.core.graphics.component1
 import androidx.core.graphics.component2
 import androidx.core.graphics.component3
 import androidx.core.graphics.component4
 import kotlin.math.roundToInt
+
+private val hsv = floatArrayOf(0f, 0f, 0f)
 
 /**
  * Returns an `Int` value representing a color being a result of mixing [color1] and [color2]
@@ -52,3 +56,53 @@ fun mixColors(
 
 private fun mixInts(left: Int, right: Int, ratio: Float): Int =
     (left * (1f - ratio) + right * ratio).roundToInt()
+
+/**
+ * Creates a color with the given hue, saturation and value.
+ *
+ * @param hue Color hue.
+ * @param saturation Color saturation.
+ * @param value Color value.
+ * @return `Int` value representing requested color.
+ */
+@ColorInt
+fun hsvColor(
+    @FloatRange(from = 0.0, to = 360.0, toInclusive = false) hue: Float,
+    @FloatRange(from = 0.0, to = 1.0) saturation: Float,
+    @FloatRange(from = 0.0, to = 1.0) value: Float
+): Int {
+    hsv[0] = hue % 360.0f
+    hsv[1] = saturation
+    hsv[2] = value
+    return Color.HSVToColor(hsv)
+}
+
+/**
+ * Returns hue of a color represented by the given `Int` value.
+ *
+ * @return Color hue.
+ */
+fun @receiver:ColorInt Int.colorHue(): Float {
+    Color.colorToHSV(this, hsv)
+    return hsv[0]
+}
+
+/**
+ * Returns saturation of a color represented by the given `Int` value.
+ *
+ * @return Color saturation.
+ */
+fun @receiver:ColorInt Int.colorSaturation(): Float {
+    Color.colorToHSV(this, hsv)
+    return hsv[1]
+}
+
+/**
+ * Returns value of a color represented by the given `Int` value.
+ *
+ * @return Color value.
+ */
+fun @receiver:ColorInt Int.colorValue(): Float {
+    Color.colorToHSV(this, hsv)
+    return hsv[2]
+}
