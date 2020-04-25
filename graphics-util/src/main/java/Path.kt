@@ -22,8 +22,19 @@ import android.graphics.Path
 
 /**
  * Clear any lines and curves from this path, making it empty,
- * and applies a new path defined in [init] function.
+ * and applies a new path defined in `init` function.
  *
+ * **Example:**
+ * ```kotlin
+ * path.set(close = true) {
+ *     moveTo(0f, 0f)
+ *     lineTo(10f, 0f)
+ *     lineTo(10f, 10f)
+ *     lineTo(0f, 10f)
+ * }
+ * ```
+ *
+ * @receiver The path.
  * @param close Set to `true` if the path should be closed upon completion.
  * @param init Function initializing a new path.
  */
