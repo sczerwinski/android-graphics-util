@@ -17,14 +17,13 @@
 package it.czerwinski.android.graphics
 
 import androidx.annotation.ColorInt
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class ColorsTest {
 
     @Test
-    @Throws(Exception::class)
-    fun shouldMixColorsEven() {
+    fun `Given two colors, when mixColors, then return a color between both colors`() {
         @ColorInt val color1 = 0x6080a0e0
         @ColorInt val color2 = 0x40302010
 
@@ -34,8 +33,7 @@ class ColorsTest {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldMixColorsUneven() {
+    fun `Given two colors, when mixColors, then return a color at the ratio between both colors`() {
         @ColorInt val color1 = 0x00000000
         @ColorInt val color2 = 0x40808080
         val ratio = .25f
