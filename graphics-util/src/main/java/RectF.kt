@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmName(name = "RectF")
+
 package it.czerwinski.android.graphics
 
 import android.graphics.RectF
