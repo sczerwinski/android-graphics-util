@@ -27,6 +27,7 @@ import kotlin.math.sin
  * Wraps the specified [block] in a call to `Canvas.withTranslation()`
  * with the specified radial coordinates.
  *
+ * @receiver The canvas.
  * @param distance Translation distance.
  * @param angle Translation angle in degrees.
  * @param block A block of instructions to be executed with the specified translation.

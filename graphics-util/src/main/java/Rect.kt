@@ -25,6 +25,7 @@ import kotlin.math.roundToInt
 /**
  * Copies the coordinates from [src] rounded to integer into this rectangle.
  *
+ * @receiver The rectangle.
  * @param src The rectangle whose coordinates are copied into this rectangle.
  */
 fun Rect.set(src: RectF) {
@@ -37,6 +38,7 @@ fun Rect.set(src: RectF) {
 /**
  * Copies the coordinates from the circle defined by its center and [radius].
  *
+ * @receiver The rectangle.
  * @param cx The x-coordinate of the center of the circle.
  * @param cy The x-coordinate of the center of the circle.
  * @param radius The radius of the circle.
@@ -51,6 +53,7 @@ fun Rect.setCircle(cx: Int, cy: Int, radius: Int) {
 /**
  * Copies the coordinates from the oval defined by its center and radii.
  *
+ * @receiver The rectangle.
  * @param cx The x-coordinate of the center of the oval.
  * @param cy The x-coordinate of the center of the oval.
  * @param rx The x-radius of the oval.

@@ -23,6 +23,7 @@ import android.graphics.RectF
 /**
  * Copies the coordinates from the circle defined by its center and [radius].
  *
+ * @receiver The rectangle.
  * @param cx The x-coordinate of the center of the circle.
  * @param cy The x-coordinate of the center of the circle.
  * @param radius The radius of the circle.
@@ -37,6 +38,7 @@ fun RectF.setCircle(cx: Float, cy: Float, radius: Float) {
 /**
  * Copies the coordinates from the oval defined by its center and radii.
  *
+ * @receiver The rectangle.
  * @param cx The x-coordinate of the center of the oval.
  * @param cy The x-coordinate of the center of the oval.
  * @param rx The x-radius of the oval.

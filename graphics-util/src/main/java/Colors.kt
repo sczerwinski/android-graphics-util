@@ -80,6 +80,7 @@ fun hsvColor(
 /**
  * Returns hue of a color represented by the given `Int` value.
  *
+ * @receiver The color.
  * @return Color hue.
  */
 fun @receiver:ColorInt Int.colorHue(): Float {
@@ -90,6 +91,7 @@ fun @receiver:ColorInt Int.colorHue(): Float {
 /**
  * Returns saturation of a color represented by the given `Int` value.
  *
+ * @receiver The color.
  * @return Color saturation.
  */
 fun @receiver:ColorInt Int.colorSaturation(): Float {
@@ -100,6 +102,7 @@ fun @receiver:ColorInt Int.colorSaturation(): Float {
 /**
  * Returns value of a color represented by the given `Int` value.
  *
+ * @receiver The color.
  * @return Color value.
  */
 fun @receiver:ColorInt Int.colorValue(): Float {

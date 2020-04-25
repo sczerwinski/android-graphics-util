@@ -21,6 +21,7 @@ package it.czerwinski.android.graphics
 /**
  * Converts angle measured in radians to degrees.
  *
+ * @receiver Angle measured in radians.
  * @return Angle measured in degrees.
  */
 fun Float.radToDeg(): Float = this * FULL_ANGLE / DOUBLE_PI
@@ -28,6 +29,7 @@ fun Float.radToDeg(): Float = this * FULL_ANGLE / DOUBLE_PI
 /**
  * Converts angle measured in degrees to radians.
  *
+ * @receiver Angle measured in degrees.
  * @return Angle measured in radians.
  */
 fun Float.degToRad(): Float = this * DOUBLE_PI / FULL_ANGLE
@@ -35,6 +37,7 @@ fun Float.degToRad(): Float = this * DOUBLE_PI / FULL_ANGLE
 /**
  * Calculates angle measured in degrees for the length of the arc and the specified [radius].
  *
+ * @receiver Length of the arc.
  * @param radius The radius of the arc.
  * @return The calculated angle measured in degrees.
  */
@@ -43,6 +46,7 @@ fun Float.arcLengthToAngle(radius: Float): Float = (this / radius).radToDeg()
 /**
  * Calculates length of the arc with the angle measured in degrees and the specified [radius].
  *
+ * @receiver Angle measured in degrees.
  * @param radius The radius of the arc.
  * @return The calculated length of the arc.
  */

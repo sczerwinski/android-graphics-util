@@ -24,6 +24,7 @@ import android.graphics.Path
  * Clear any lines and curves from this path, making it empty,
  * and applies a new path defined in [init] function.
  *
+ * @receiver The path.
  * @param close Set to `true` if the path should be closed upon completion.
  * @param init Function initializing a new path.
  */
