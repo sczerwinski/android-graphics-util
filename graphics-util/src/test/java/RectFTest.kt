@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Slawomir Czerwinski
+ * Copyright 2019-2020 Slawomir Czerwinski
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,21 +17,20 @@
 package it.czerwinski.android.graphics
 
 import android.graphics.RectF
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import io.mockk.impl.annotations.SpyK
+import io.mockk.junit5.MockKExtension
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockKExtension::class)
 class RectFTest {
 
-    @Mock
-    lateinit var rect: RectF
+    @SpyK(name = "rectF")
+    private var rect = RectF()
 
-    @Before
-    @Throws(Exception::class)
+    @BeforeEach
     fun resetMock() {
         rect.left = 0f
         rect.top = 0f
@@ -40,8 +39,7 @@ class RectFTest {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldSetRectCoordinatesFromCircle() {
+    fun `Given circle center and radius, when setCircle, then set rectangle to circumscribe the circle`() {
         rect.setCircle(cx = 1f, cy = 2f, radius = 0.5f)
 
         assertEquals(0.5f, rect.left, DELTA)
@@ -51,8 +49,7 @@ class RectFTest {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldSetRectCoordinatesFromOval() {
+    fun `Given oval center and radii, when setOval, then set rectangle to circumscribe the oval`() {
         rect.setOval(cx = 1f, cy = 2f, rx = 0.5f, ry = 0.7f)
 
         assertEquals(0.5f, rect.left, DELTA)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Slawomir Czerwinski
+ * Copyright 2019-2020 Slawomir Czerwinski
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +18,21 @@ package it.czerwinski.android.graphics
 
 import android.graphics.Rect
 import android.graphics.RectF
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.Mockito.mock
-import org.mockito.junit.MockitoJUnitRunner
+import io.mockk.impl.annotations.SpyK
+import io.mockk.junit5.MockKExtension
+import io.mockk.spyk
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockKExtension::class)
 class RectTest {
 
-    @Mock
-    lateinit var rect: Rect
+    @SpyK(name = "rect")
+    private var rect = Rect()
 
-    @Before
-    @Throws(Exception::class)
+    @BeforeEach
     fun resetMock() {
         rect.left = 0
         rect.top = 0
@@ -42,9 +41,8 @@ class RectTest {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldSetCoordinatesFromRectF() {
-        val source = mock(RectF::class.java)
+    fun `Given a RectF, when set, then set rectangle to match rounded coordinates of RectF`() {
+        val source = spyk(RectF(), name = "rectF")
         source.left = 1.1f
         source.top = 2.2f
         source.right = 3.8f
@@ -59,8 +57,7 @@ class RectTest {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldSetRectCoordinatesFromCircle() {
+    fun `Given circle center and radius, when setCircle, then set rectangle to circumscribe the circle`() {
         rect.setCircle(cx = 10, cy = 20, radius = 5)
 
         assertEquals(5, rect.left)
@@ -70,8 +67,7 @@ class RectTest {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldSetRectCoordinatesFromOval() {
+    fun `Given oval center and radii, when setOval, then set rectangle to circumscribe the oval`() {
         rect.setOval(cx = 10, cy = 20, rx = 5, ry = 7)
 
         assertEquals(5, rect.left)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Slawomir Czerwinski
+ * Copyright 2019-2020 Slawomir Czerwinski
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,69 +17,55 @@
 package it.czerwinski.android.graphics
 
 import android.graphics.Path
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers.anyFloat
-import org.mockito.Captor
-import org.mockito.Mock
-import org.mockito.Mockito.doNothing
-import org.mockito.Mockito.inOrder
-import org.mockito.junit.MockitoJUnitRunner
+import io.mockk.*
+import io.mockk.impl.annotations.MockK
+import io.mockk.junit5.MockKExtension
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockKExtension::class)
 class PathTest {
 
-    @Mock
+    @MockK
     lateinit var path: Path
 
-    @Captor
-    lateinit var floatCaptor: ArgumentCaptor<Float>
-
     @Test
-    @Throws(Exception::class)
-    fun shouldSetNewPath() {
-        doNothing().`when`(path).reset()
-        doNothing().`when`(path).moveTo(anyFloat(), anyFloat())
-        doNothing().`when`(path).lineTo(anyFloat(), anyFloat())
+    fun `When set, then replace existing path`() {
+        every { path.reset() } just Runs
+        every { path.moveTo(any(), any()) } just Runs
+        every { path.lineTo(any(), any()) } just Runs
 
         path.set {
             moveTo(1f, 1.5f)
             lineTo(2.5f, 3f)
         }
 
-        inOrder(path).apply {
-            verify(path).reset()
-            verify(path).moveTo(floatCaptor.capture(), floatCaptor.capture())
-            verify(path).lineTo(floatCaptor.capture(), floatCaptor.capture())
-            verifyNoMoreInteractions()
+        verifyOrder {
+            path.reset()
+            path.moveTo(eq(value = 1f), eq(value = 1.5f))
+            path.lineTo(eq(value = 2.5f), eq(value = 3f))
         }
-
-        assertEquals(listOf(1f, 1.5f, 2.5f, 3f), floatCaptor.allValues)
+        confirmVerified(path)
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldSetNewClosedPath() {
-        doNothing().`when`(path).reset()
-        doNothing().`when`(path).moveTo(anyFloat(), anyFloat())
-        doNothing().`when`(path).lineTo(anyFloat(), anyFloat())
-        doNothing().`when`(path).close()
+    fun `When set, then replace existing path with a closed path`() {
+        every { path.reset() } just Runs
+        every { path.moveTo(any(), any()) } just Runs
+        every { path.lineTo(any(), any()) } just Runs
+        every { path.close() } just Runs
 
         path.set(close = true) {
             moveTo(1f, 1.5f)
             lineTo(2.5f, 3f)
         }
 
-        inOrder(path).apply {
-            verify(path).reset()
-            verify(path).moveTo(floatCaptor.capture(), floatCaptor.capture())
-            verify(path).lineTo(floatCaptor.capture(), floatCaptor.capture())
-            verify(path).close()
-            verifyNoMoreInteractions()
+        verifyOrder {
+            path.reset()
+            path.moveTo(eq(value = 1f), eq(value = 1.5f))
+            path.lineTo(eq(value = 2.5f), eq(value = 3f))
+            path.close()
         }
-
-        assertEquals(listOf(1f, 1.5f, 2.5f, 3f), floatCaptor.allValues)
+        confirmVerified(path)
     }
 }
