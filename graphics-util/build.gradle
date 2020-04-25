@@ -1,7 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'de.mannodermaus.android-junit5'
 apply plugin: 'org.jetbrains.dokka'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 android {
@@ -38,7 +39,7 @@ android {
                         "${result.failedTestCount} failed, " +
                         "${result.skippedTestCount} skipped)"
                 def repeatLength = output.length()
-                println('\n' + ('=' * repeatLength) + '\n' + desc.name + '\n' + output + '\n' + ('=' * repeatLength))
+                logger.quiet('\n' + ('=' * repeatLength) + '\n' + desc.name + '\n' + output + '\n' + ('=' * repeatLength))
             }
         }
     }
@@ -87,85 +88,103 @@ artifacts {
     archives dokkaJar
 }
 
-if (hasProperty('signing.keyId')) {
-    signing {
-        sign configurations.archives
-    }
-}
+def withSigning = hasProperty('signing.keyId')
+def isSnapshot = libVersion.endsWith('SNAPSHOT')
 
-uploadArchives {
-    repositories.mavenDeployer {
-        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
 
-        pom.groupId = "$groupId"
-        pom.artifactId = "$artifactId"
-        pom.version = "$libVersion"
+                groupId = "$libGroupId"
+                artifactId = "$libArtifactId"
+                version = "$libVersion"
 
-        pom.project {
-
-            name libName
-            packaging 'jar'
-            description libDescription
-            url libUrl
-
-            scm {
-                connection 'scm:git:https://github.com/sczerwinski/android-graphics-util.git'
-                developerConnection 'scm:git:https://github.com/sczerwinski/android-graphics-util.git'
-                url 'https://github.com/sczerwinski/android-graphics-util'
-            }
-
-            licenses {
-                license {
-                    name 'Apache License 2.0'
-                    url 'https://www.apache.org/licenses/LICENSE-2.0'
+                pom {
+                    name = libName
+                    description = libDescription
+                    url = libUrl
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'sczerwinski'
+                            name = 'Slawomir Czerwinski'
+                            email = 'slawomir@czerwinski.it'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:https://github.com/sczerwinski/android-graphics-util.git'
+                        developerConnection = 'scm:git:https://github.com/sczerwinski/android-graphics-util.git'
+                        url = 'https://github.com/sczerwinski/android-graphics-util'
+                    }
                 }
             }
+            debug(MavenPublication) {
+                from components.debug
 
-            developers {
-                developer {
-                    id 'sczerwinski'
-                    name 'Slawomir Czerwinski'
-                    email 'slawomir@czerwinski.it'
+                groupId = "$libGroupId"
+                artifactId = "$libArtifactId-debug"
+                version = "$libVersion"
+
+                pom {
+                    name = libName
+                    description = libDescription
+                    url = libUrl
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'sczerwinski'
+                            name = 'Slawomir Czerwinski'
+                            email = 'slawomir@czerwinski.it'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:https://github.com/sczerwinski/android-graphics-util.git'
+                        developerConnection = 'scm:git:https://github.com/sczerwinski/android-graphics-util.git'
+                        url = 'https://github.com/sczerwinski/android-graphics-util'
+                    }
                 }
             }
         }
-
-        if (System.getenv('SONATYPE_USERNAME') != null) {
-
-            println("Uploading to Sonatype")
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(
-                        userName: System.getenv('SONATYPE_USERNAME'),
-                        password: System.getenv('SONATYPE_PASSWORD')
-                )
+        repositories {
+            maven {
+                if (System.getenv('SONATYPE_USERNAME') != null) {
+                    logger.quiet("Publishing to Sonatype")
+                    url = isSnapshot ? ossrhSnapshotRepo : ossrhRepo
+                    credentials {
+                        username = System.getenv('SONATYPE_USERNAME')
+                        password = System.getenv('SONATYPE_PASSWORD')
+                    }
+                } else if (project.hasProperty('ossrhUsername')) {
+                    logger.quiet("Publishing to Sonatype")
+                    url = isSnapshot ? ossrhSnapshotRepo : ossrhRepo
+                    credentials {
+                        username = ossrhUsername
+                        password = ossrhPassword
+                    }
+                } else {
+                    logger.quiet("Publishing to local repository")
+                    url = "${buildDir}/repos"
+                }
             }
+        }
+    }
 
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(
-                        userName: System.getenv('SONATYPE_USERNAME'),
-                        password: System.getenv('SONATYPE_PASSWORD')
-                )
-            }
-
-        } else if (project.hasProperty('ossrhUsername')) {
-
-            println("Uploading to Sonatype")
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-        } else {
-
-            println("Uploading to local repository")
-
-            repository(url: "file://${buildDir}/release/$libVersion")
-
+    if (withSigning) {
+        signing {
+            sign publishing.publications.release
+            sign publishing.publications.debug
         }
     }
 }
