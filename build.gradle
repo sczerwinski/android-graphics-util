@@ -1,4 +1,4 @@
-group groupId
+group libGroupId
 version libVersion
 description = libDescription
 
