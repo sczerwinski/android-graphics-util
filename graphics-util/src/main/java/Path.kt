@@ -22,7 +22,7 @@ import android.graphics.Path
 
 /**
  * Clear any lines and curves from this path, making it empty,
- * and applies a new path defined in [init] function.
+ * and applies a new path defined in `init` function.
  *
  * **Example:**
  * ```kotlin

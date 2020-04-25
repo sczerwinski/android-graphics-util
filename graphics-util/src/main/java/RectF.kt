@@ -21,7 +21,7 @@ package it.czerwinski.android.graphics
 import android.graphics.RectF
 
 /**
- * Copies the coordinates from the circle defined by its center and [radius].
+ * Copies the coordinates from the circle defined by its center and radius.
  *
  * @receiver The rectangle.
  * @param cx The x-coordinate of the center of the circle.

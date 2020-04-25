@@ -24,7 +24,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /**
- * Wraps the specified [block] in a call to `Canvas.withTranslation()`
+ * Wraps the specified `block` in a call to `Canvas.withTranslation()`
  * with the specified radial coordinates.
  *
  * **Example:**
