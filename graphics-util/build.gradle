@@ -6,11 +6,11 @@ apply plugin: 'signing'
 
 android {
 
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode libVersionCode.toInteger()
         versionName libVersion
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -42,12 +42,21 @@ android {
             }
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.annotation:annotation:1.1.0'
 
     testImplementation "junit:junit:$junitVersion"
@@ -55,10 +64,12 @@ dependencies {
 }
 
 dokka {
-    moduleName = libDescription
     outputFormat = 'javadoc'
     outputDirectory = "$buildDir/javadoc"
-    includes = ['packages.md']
+    configuration {
+        moduleName = libDescription
+        includes = ['packages.md']
+    }
 }
 
 task sourcesJar(type: Jar) {
