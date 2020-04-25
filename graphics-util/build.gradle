@@ -83,11 +83,6 @@ task dokkaJar(type: Jar, dependsOn: project.dokka) {
     from dokka
 }
 
-artifacts {
-    archives sourcesJar
-    archives dokkaJar
-}
-
 def withSigning = hasProperty('signing.keyId')
 def isSnapshot = libVersion.endsWith('SNAPSHOT')
 
@@ -100,6 +95,9 @@ afterEvaluate {
                 groupId = "$libGroupId"
                 artifactId = "$libArtifactId"
                 version = "$libVersion"
+
+                artifact(sourcesJar)
+                artifact(dokkaJar)
 
                 pom {
                     name = libName
@@ -131,6 +129,9 @@ afterEvaluate {
                 groupId = "$libGroupId"
                 artifactId = "$libArtifactId-debug"
                 version = "$libVersion"
+
+                artifact(sourcesJar)
+                artifact(dokkaJar)
 
                 pom {
                     name = libName
