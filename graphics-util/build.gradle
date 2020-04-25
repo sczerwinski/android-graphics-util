@@ -38,7 +38,7 @@ android {
                         "${result.failedTestCount} failed, " +
                         "${result.skippedTestCount} skipped)"
                 def repeatLength = output.length()
-                println('\n' + ('=' * repeatLength) + '\n' + desc.name + '\n' + output + '\n' + ('=' * repeatLength))
+                logger.quiet('\n' + ('=' * repeatLength) + '\n' + desc.name + '\n' + output + '\n' + ('=' * repeatLength))
             }
         }
     }
@@ -132,7 +132,7 @@ uploadArchives {
 
         if (System.getenv('SONATYPE_USERNAME') != null) {
 
-            println("Uploading to Sonatype")
+            logger.quiet("Uploading to Sonatype")
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
                 authentication(
@@ -150,7 +150,7 @@ uploadArchives {
 
         } else if (project.hasProperty('ossrhUsername')) {
 
-            println("Uploading to Sonatype")
+            logger.quiet("Uploading to Sonatype")
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
                 authentication(userName: ossrhUsername, password: ossrhPassword)
@@ -162,7 +162,7 @@ uploadArchives {
 
         } else {
 
-            println("Uploading to local repository")
+            logger.quiet("Uploading to local repository")
 
             repository(url: "file://${buildDir}/release/$libVersion")
 
