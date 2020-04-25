@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Slawomir Czerwinski
+ * Copyright 2019-2020 Slawomir Czerwinski
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,26 +18,23 @@ package it.czerwinski.android.graphics
 
 import android.graphics.Path
 import android.graphics.RectF
-import it.czerwinski.android.graphics.matchers.rectFEq
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.AdditionalMatchers.eq
-import org.mockito.ArgumentMatchers.anyBoolean
-import org.mockito.ArgumentMatchers.anyFloat
-import org.mockito.Mockito.*
-import org.mockito.Spy
-import org.mockito.junit.MockitoJUnitRunner
+import io.mockk.*
+import io.mockk.impl.annotations.SpyK
+import io.mockk.junit5.MockKExtension
+import it.czerwinski.android.graphics.mockk.eq
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
-@RunWith(MockitoJUnitRunner::class)
+@ExtendWith(MockKExtension::class)
 class AdvancedPathTest {
 
-    @Spy
-    lateinit var path: AdvancedPath
+    @SpyK(name = "path")
+    private var path = AdvancedPath()
 
     @Test
-    @Throws(Exception::class)
-    fun shouldAppendArcOfCircle() {
-        doNothing().`when`(path).arcTo(any(RectF::class.java), anyFloat(), anyFloat(), anyBoolean())
+    fun `When arcTo, then call add arc to the path`() {
+        every { path.arcTo(any(), any(), any(), any()) } just Runs
 
         path.arcTo(
             cx = 1f,
@@ -48,29 +45,36 @@ class AdvancedPathTest {
             forceMoveTo = true
         )
 
-        inOrder(path).apply {
-            verify(path).arcTo(
-                rectFEq(0.5f, 1.5f, 1.5f, 2.5f, DELTA),
-                eq(10f, DELTA),
-                eq(20f, DELTA),
-                eq(true)
+        val rectFSlot = slot<RectF>()
+        verify(exactly = 1) {
+            path.arcTo(
+                capture(rectFSlot),
+                eq(value = 10f, delta = DELTA),
+                eq(value = 20f, delta = DELTA),
+                eq(value = true)
             )
         }
+
+        assertEquals(0.5f, rectFSlot.captured.left, DELTA)
+        assertEquals(1.5f, rectFSlot.captured.top, DELTA)
+        assertEquals(1.5f, rectFSlot.captured.right, DELTA)
+        assertEquals(2.5f, rectFSlot.captured.bottom, DELTA)
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldAddConvexCircleSector() {
-        doNothing().`when`(path).arcTo(
-            cx = anyFloat(),
-            cy = anyFloat(),
-            radius = anyFloat(),
-            startAngle = anyFloat(),
-            sweepAngle = anyFloat(),
-            forceMoveTo = anyBoolean()
-        )
-        doNothing().`when`(path).lineTo(anyFloat(), anyFloat())
-        doNothing().`when`(path).close()
+    fun `When addCircleSector with oblique angle, then add convex circle sector to the path`() {
+        every {
+            path.arcTo(
+                cx = any(),
+                cy = any(),
+                radius = any(),
+                startAngle = any(),
+                sweepAngle = any(),
+                forceMoveTo = any()
+            )
+        } just Runs
+        every { path.lineTo(any(), any()) } just Runs
+        every { path.close() } just Runs
 
         path.addCircleSector(
             cx = 1f,
@@ -81,35 +85,36 @@ class AdvancedPathTest {
             inset = 0.1f
         )
 
-        inOrder(path).apply {
-            verify(path).arcTo(
-                eq(1f, DELTA),
-                eq(2f, DELTA),
-                eq(10f, DELTA),
-                eq(90.57f, BIG_DELTA),
-                eq(88.85f, BIG_DELTA),
-                eq(true)
+        verifyOrder {
+            path.arcTo(
+                eq(value = 1f, delta = DELTA),
+                eq(value = 2f, delta = DELTA),
+                eq(value = 10f, delta = DELTA),
+                eq(value = 90.57f, delta = BIG_DELTA),
+                eq(value = 88.85f, delta = BIG_DELTA),
+                eq(value = true)
             )
-            verify(path).lineTo(
-                eq(0.9f, DELTA),
-                eq(2.1f, DELTA)
+            path.lineTo(
+                eq(value = 0.9f, delta = DELTA),
+                eq(value = 2.1f, delta = DELTA)
             )
-            verify(path).close()
+            path.close()
         }
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldAddConcaveCircleSector() {
-        doNothing().`when`(path).arcTo(
-            cx = anyFloat(),
-            cy = anyFloat(),
-            radius = anyFloat(),
-            startAngle = anyFloat(),
-            sweepAngle = anyFloat(),
-            forceMoveTo = anyBoolean()
-        )
-        doNothing().`when`(path).close()
+    fun `When addCircleSector with reflex angle, then add concave circle sector to the path`() {
+        every {
+            path.arcTo(
+                cx = any(),
+                cy = any(),
+                radius = any(),
+                startAngle = any(),
+                sweepAngle = any(),
+                forceMoveTo = any()
+            )
+        } just Runs
+        every { path.close() } just Runs
 
         path.addCircleSector(
             cx = 1f,
@@ -120,31 +125,30 @@ class AdvancedPathTest {
             inset = 0.1f
         )
 
-        inOrder(path).apply {
-            verify(path).arcTo(
-                eq(1f, DELTA),
-                eq(2f, DELTA),
-                eq(10f, DELTA),
-                eq(90.57f, BIG_DELTA),
-                eq(268.85f, BIG_DELTA),
-                eq(true)
+        verifyOrder {
+            path.arcTo(
+                eq(value = 1f, delta = DELTA),
+                eq(value = 2f, delta = DELTA),
+                eq(value = 10f, delta = DELTA),
+                eq(value = 90.57f, delta = BIG_DELTA),
+                eq(value = 268.85f, delta = BIG_DELTA),
+                eq(value = true)
             )
-            verify(path).arcTo(
-                eq(1f, DELTA),
-                eq(2f, DELTA),
-                eq(0.1f, DELTA),
-                eq(270f, DELTA),
-                eq(-90f, DELTA),
-                eq(false)
+            path.arcTo(
+                eq(value = 1f, delta = DELTA),
+                eq(value = 2f, delta = DELTA),
+                eq(value = 0.1f, delta = DELTA),
+                eq(value = 270f, delta = DELTA),
+                eq(value = -90f, delta = DELTA),
+                eq(value = false)
             )
-            verify(path).close()
+            path.close()
         }
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldAddFullCircleSector() {
-        doNothing().`when`(path).addCircle(anyFloat(), anyFloat(), anyFloat(), any())
+    fun `When addCircleSector with full angle, then add a circle to the path`() {
+        every { path.addCircle(any(), any(), any(), any()) } just Runs
 
         path.addCircleSector(
             cx = 1f,
@@ -155,28 +159,29 @@ class AdvancedPathTest {
             inset = 0.1f
         )
 
-        inOrder(path).apply {
-            verify(path).addCircle(
-                eq(1f, DELTA),
-                eq(2f, DELTA),
-                eq(10f, DELTA),
-                eq(Path.Direction.CCW)
+        verify(exactly = 1) {
+            path.addCircle(
+                eq(value = 1f, delta = DELTA),
+                eq(value = 2f, delta = DELTA),
+                eq(value = 10f, delta = DELTA),
+                Path.Direction.CCW
             )
         }
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldAddRingSector() {
-        doNothing().`when`(path).arcTo(
-            cx = anyFloat(),
-            cy = anyFloat(),
-            radius = anyFloat(),
-            startAngle = anyFloat(),
-            sweepAngle = anyFloat(),
-            forceMoveTo = anyBoolean()
-        )
-        doNothing().`when`(path).close()
+    fun `When addRingSector, then add a ring sector to the path`() {
+        every {
+            path.arcTo(
+                cx = any(),
+                cy = any(),
+                radius = any(),
+                startAngle = any(),
+                sweepAngle = any(),
+                forceMoveTo = any()
+            )
+        } just Runs
+        every { path.close() } just Runs
 
         path.addRingSector(
             cx = 1f,
@@ -188,39 +193,40 @@ class AdvancedPathTest {
             inset = 0.1f
         )
 
-        inOrder(path).apply {
-            verify(path).arcTo(
-                eq(1f, DELTA),
-                eq(2f, DELTA),
-                eq(10f, DELTA),
-                eq(90.57f, BIG_DELTA),
-                eq(88.85f, BIG_DELTA),
-                eq(true)
+        verifyOrder {
+            path.arcTo(
+                eq(value = 1f, delta = DELTA),
+                eq(value = 2f, delta = DELTA),
+                eq(value = 10f, delta = DELTA),
+                eq(value = 90.57f, delta = BIG_DELTA),
+                eq(value = 88.85f, delta = BIG_DELTA),
+                eq(value = true)
             )
-            verify(path).arcTo(
-                eq(1f, DELTA),
-                eq(2f, DELTA),
-                eq(7.5f, DELTA),
-                eq(179.24f, BIG_DELTA),
-                eq(-88.47f, BIG_DELTA),
-                eq(false)
+            path.arcTo(
+                eq(value = 1f, delta = DELTA),
+                eq(value = 2f, delta = DELTA),
+                eq(value = 7.5f, delta = DELTA),
+                eq(value = 179.24f, delta = BIG_DELTA),
+                eq(value = -88.47f, delta = BIG_DELTA),
+                eq(value = false)
             )
-            verify(path).close()
+            path.close()
         }
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldSetNewPath() {
-        doNothing().`when`(path).reset()
-        doNothing().`when`(path).arcTo(
-            cx = anyFloat(),
-            cy = anyFloat(),
-            radius = anyFloat(),
-            startAngle = anyFloat(),
-            sweepAngle = anyFloat(),
-            forceMoveTo = anyBoolean()
-        )
+    fun `When set, then replace existing path`() {
+        every { path.reset() } just Runs
+        every {
+            path.arcTo(
+                cx = any(),
+                cy = any(),
+                radius = any(),
+                startAngle = any(),
+                sweepAngle = any(),
+                forceMoveTo = any()
+            )
+        } just Runs
 
         path.set {
             arcTo(
@@ -233,33 +239,34 @@ class AdvancedPathTest {
             )
         }
 
-        inOrder(path).apply {
-            verify(path).reset()
-            verify(path).arcTo(
-                eq(1f, DELTA),
-                eq(2f, DELTA),
-                eq(0.5f, DELTA),
-                eq(10f, DELTA),
-                eq(20f, DELTA),
-                eq(true)
+        verifyOrder {
+            path.reset()
+            path.arcTo(
+                eq(value = 1f, delta = DELTA),
+                eq(value = 2f, delta = DELTA),
+                eq(value = 0.5f, delta = DELTA),
+                eq(value = 10f, delta = DELTA),
+                eq(value = 20f, delta = DELTA),
+                eq(value = true)
             )
-            verifyNoMoreInteractions(path)
         }
+        confirmVerified(path)
     }
 
     @Test
-    @Throws(Exception::class)
-    fun shouldSetNewClosedPath() {
-        doNothing().`when`(path).reset()
-        doNothing().`when`(path).arcTo(
-            cx = anyFloat(),
-            cy = anyFloat(),
-            radius = anyFloat(),
-            startAngle = anyFloat(),
-            sweepAngle = anyFloat(),
-            forceMoveTo = anyBoolean()
-        )
-        doNothing().`when`(path).close()
+    fun `When set, then replace existing path with a closed path`() {
+        every { path.reset() } just Runs
+        every {
+            path.arcTo(
+                cx = any(),
+                cy = any(),
+                radius = any(),
+                startAngle = any(),
+                sweepAngle = any(),
+                forceMoveTo = any()
+            )
+        } just Runs
+        every { path.close() } just Runs
 
         path.set(close = true) {
             arcTo(
@@ -272,18 +279,18 @@ class AdvancedPathTest {
             )
         }
 
-        inOrder(path).apply {
-            verify(path).reset()
-            verify(path).arcTo(
-                eq(1f, DELTA),
-                eq(2f, DELTA),
-                eq(0.5f, DELTA),
-                eq(10f, DELTA),
-                eq(20f, DELTA),
-                eq(true)
+        verifyOrder {
+            path.reset()
+            path.arcTo(
+                eq(value = 1f, delta = DELTA),
+                eq(value = 2f, delta = DELTA),
+                eq(value = 0.5f, delta = DELTA),
+                eq(value = 10f, delta = DELTA),
+                eq(value = 20f, delta = DELTA),
+                eq(value = true)
             )
-            verify(path).close()
-            verifyNoMoreInteractions(path)
+            path.close()
         }
+        confirmVerified(path)
     }
 }

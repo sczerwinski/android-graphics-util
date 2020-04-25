@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Slawomir Czerwinski
+ * Copyright 2019-2020 Slawomir Czerwinski
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package it.czerwinski.android.graphics.matchers
+@file:JvmName(name = "MockKMatchers")
 
-import android.graphics.RectF
-import org.mockito.ArgumentMatcher
-import org.mockito.internal.progress.ThreadSafeMockingProgress.mockingProgress
+package it.czerwinski.android.graphics.mockk
 
-private fun reportMatcher(matcher: ArgumentMatcher<*>) {
-    mockingProgress().argumentMatcherStorage.reportMatcher(matcher)
-}
+import io.mockk.MockKMatcherScope
 
-fun rectFEq(left: Float, top: Float, right: Float, bottom: Float, delta: Float): RectF {
-    reportMatcher(RectFMatcher(left, top, right, bottom, delta))
-    return RectF()
-}
+/**
+ * Matches a range from `value - delta` to `value + delta`.
+ */
+@Suppress("NOTHING_TO_INLINE")
+inline fun MockKMatcherScope.eq(value: Float, delta: Float) =
+    range(from = value - delta, to = value + delta)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Slawomir Czerwinski
+ * Copyright 2019-2020 Slawomir Czerwinski
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmName(name = "Rect")
+
 package it.czerwinski.android.graphics
 
 import android.graphics.Rect
@@ -21,8 +23,9 @@ import android.graphics.RectF
 import kotlin.math.roundToInt
 
 /**
- * Copies the coordinates from [src] rounded to integer into this rectangle.
+ * Copies the coordinates from `src` rounded to integer into this rectangle.
  *
+ * @receiver The rectangle.
  * @param src The rectangle whose coordinates are copied into this rectangle.
  */
 fun Rect.set(src: RectF) {
@@ -33,8 +36,9 @@ fun Rect.set(src: RectF) {
 }
 
 /**
- * Copies the coordinates from the circle defined by its center and [radius].
+ * Copies the coordinates from the circle defined by its center and radius.
  *
+ * @receiver The rectangle.
  * @param cx The x-coordinate of the center of the circle.
  * @param cy The x-coordinate of the center of the circle.
  * @param radius The radius of the circle.
@@ -49,6 +53,7 @@ fun Rect.setCircle(cx: Int, cy: Int, radius: Int) {
 /**
  * Copies the coordinates from the oval defined by its center and radii.
  *
+ * @receiver The rectangle.
  * @param cx The x-coordinate of the center of the oval.
  * @param cy The x-coordinate of the center of the oval.
  * @param rx The x-radius of the oval.

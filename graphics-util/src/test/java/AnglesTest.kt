@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Slawomir Czerwinski
+ * Copyright 2019-2020 Slawomir Czerwinski
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,13 @@
 
 package it.czerwinski.android.graphics
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 
 class AnglesTest {
 
     @Test
-    @Throws(Exception::class)
-    fun radiansShouldBeConvertedToDegrees() {
+    fun `Given an angle in radians, when radToDeg, then return the same angle in degrees`() {
         val radAngle = PI / 2f
 
         val result = radAngle.radToDeg()
@@ -32,8 +31,7 @@ class AnglesTest {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun degreesShouldBeConvertedToRadians() {
+    fun `Given an angle in degrees, when degToRad, then return the same angle in radians`() {
         val degAngle = STRAIGHT_ANGLE
 
         val result = degAngle.degToRad()
@@ -42,21 +40,21 @@ class AnglesTest {
     }
 
     @Test
-    @Throws(Exception::class)
-    fun arcLengthShouldBeConvertedToAngle() {
+    fun `Given arc length and radius, when arcLengthToAngle, then return angle of the arc`() {
         val arcLength = PI
+        val arcRadius = 2f
 
-        val result = arcLength.arcLengthToAngle(radius = 2f)
+        val result = arcLength.arcLengthToAngle(radius = arcRadius)
 
         assertEquals(RIGHT_ANGLE, result, DELTA)
     }
 
     @Test
-    @Throws(Exception::class)
-    fun angleShouldBeConvertedToArcLength() {
+    fun `Given angle and arc radius, when angleToArcLength, then return arc length`() {
         val angle = STRAIGHT_ANGLE
+        val arcRadius = 2f
 
-        val result = angle.angleToArcLength(radius = 2f)
+        val result = angle.angleToArcLength(radius = arcRadius)
 
         assertEquals(DOUBLE_PI, result, DELTA)
     }

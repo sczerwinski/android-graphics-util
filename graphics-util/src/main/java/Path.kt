@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Slawomir Czerwinski
+ * Copyright 2019-2020 Slawomir Czerwinski
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,27 @@
  * limitations under the License.
  */
 
+@file:JvmName(name = "Path")
+
 package it.czerwinski.android.graphics
 
 import android.graphics.Path
 
 /**
  * Clear any lines and curves from this path, making it empty,
- * and applies a new path defined in [init] function.
+ * and applies a new path defined in `init` function.
  *
+ * **Example:**
+ * ```kotlin
+ * path.set(close = true) {
+ *     moveTo(0f, 0f)
+ *     lineTo(10f, 0f)
+ *     lineTo(10f, 10f)
+ *     lineTo(0f, 10f)
+ * }
+ * ```
+ *
+ * @receiver The path.
  * @param close Set to `true` if the path should be closed upon completion.
  * @param init Function initializing a new path.
  */
