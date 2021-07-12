@@ -124,4 +124,13 @@ class ColorsTest {
 
         verify(exactly = 1) { Color.colorToHSV(color, refEq(hsvSlot.captured)) }
     }
+
+    @Test
+    fun `Given a color, when withAlpha, then return the same color with new alpha value`() {
+        @ColorInt val color = 0xFF60C0C0.toInt()
+
+        @ColorInt val result = color.withAlpha(alpha = 254)
+
+        assertEquals(0xFE60C0C0.toInt(), result)
+    }
 }
