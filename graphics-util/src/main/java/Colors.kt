@@ -109,3 +109,14 @@ fun @receiver:ColorInt Int.colorValue(): Float {
     Color.colorToHSV(this, hsv)
     return hsv[2]
 }
+
+/**
+ * Returns the same color, but with the given `alpha` channel.
+ *
+ * @receiver Original color.
+ * @param alpha New alpha channel value.
+ * @return The same color with altered alpha channel.
+ */
+@ColorInt
+fun @receiver:ColorInt Int.withAlpha(alpha: Int): Int =
+    (alpha shl 24) or (this and 0xffffff)
